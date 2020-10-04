@@ -43,14 +43,20 @@ app.post('/order', function (req, res) {
      let preference = {
      items: [
        {
+         id: '1234',
+         description:'Dispositivo móvil de Tienda e-commerce',
          title: title,
          unit_price: price,
-         quantity: unit
+         quantity: unit,
+         external_reference : 'plinio.arbizu@gmail.com'
        }
      ]
      };
    
  
+     //d) URL Imagen: Foto del producto seleccionado. (url válida)
+     
+   
      mercadopago.preferences.create(preference)
      .then(function(response){
      // Este valor reemplazará el string "<%= global.id %>" en tu HTML
