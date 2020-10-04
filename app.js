@@ -1,5 +1,11 @@
 var express = require('express');
 var exphbs  = require('express-handlebars');
+const mercadopago = require ('mercadopago');
+
+mercadopago.configure({
+    access_token: 'APP_USR-1159009372558727-072921-8d0b9980c7494985a5abd19fbe921a3d-617633181'
+  });
+ 
  
 var app = express();
  
@@ -21,6 +27,41 @@ app.get('/', function(request, response) {
     console.log('App is running, server is listening on port ', app.get('port'));
 });
 
+
+
+app.post('/order', function (req, res) {
+  
+
+    // const body = req.body;
+ 
+    
+     const title = req.body.title;
+     const price = Number(req.body.price);
+     const unit = parseInt(req.body.unit);
+ 
+    
+     let preference = {
+     items: [
+       {
+         title: title,
+         unit_price: price,
+         quantity: unit
+       }
+     ]
+     };
+   
+ 
+     mercadopago.preferences.create(preference)
+     .then(function(response){
+     // Este valor reemplazará el string "<%= global.id %>" en tu HTML
+     global.id = response.body.id;
+     }).catch(function(error){
+     console.log(error);
+     });
+   
+     //res.send('POST request to the homepage xx' + JSON.stringify(preference));
+ 
+ });
 
 
 app.get('/detail', function (req, res) {
