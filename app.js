@@ -41,6 +41,23 @@ app.post('/order', function (req, res) {
      const title = req.body.title;
      const price = Number(req.body.price);
      const unit = parseInt(req.body.unit);
+
+     var payer = {
+        name: "Lalo",
+        surname: "Landa",
+        email: "test_user_58295862@testuser.com",
+        date_created: "2020-06-02T12:58:41.425-04:00",
+        phone: {
+          area_code: "52",
+          number: "5549737300"
+        },
+        address: {
+          street_name: "Insurgentes Sur",
+          street_number: "1602",
+          zip_code: "03940"
+        }
+    }
+
  
     
      let preference = {
@@ -53,7 +70,8 @@ app.post('/order', function (req, res) {
          quantity: unit,
          external_reference : 'plinio.arbizu@gmail.com'
        }
-     ]
+     ],
+     payer : payer
      };
    
  
