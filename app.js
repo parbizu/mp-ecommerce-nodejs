@@ -8,24 +8,33 @@ mercadopago.configure({
   });
  
 
-
  
 var app = express();
  
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
+/*
 app.get('/', function (req, res) {
     res.render('home');
 });
-
+*/
 
 app.set('port', (process.env.PORT || 5000));
 
 //For avoidong Heroku $PORT error
+
 app.get('/', function(request, response) {
-    var result = 'App is running'
-    response.send(result);
+    //var result = 'App is running'
+    //response.send(result);
+    response.render('home');
+
 }).listen(app.get('port'), function() {
     console.log('App is running, server is listening on port ', app.get('port'));
 });
@@ -50,9 +59,21 @@ app.post('/order', function (req, res) {
        }
      ]
      };
+
+     console.log("entro aca bbb");
+
+     mercadopago.preferences.create(preference)
+     .then(function(response){
+        console.log('aca d');
+        // Este valor reemplazará el string "<%= global.id %>" en tu HTML
+     global.id = response.body.id;
+     }).catch(function(error){
+         console.log('aca');
+     console.log(error);
+     });
      
    
-    res.send('POST request to the homepage xx' + JSON.stringify(preference));
+    //res.send('POST request to the homepage xx' + JSON.stringify(preference));
 
     //res.send('POST request to the homepage xx' + req);
  
